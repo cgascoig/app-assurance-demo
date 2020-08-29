@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cc.cloudten</groupId>
+	<artifactId>supercar-trader</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>supercar-trader</name>
+
+	<modules>
+		<module>web</module>
+		<module>supercar</module>
+		<module>api</module>
+		<module>inventory</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.31.v20200723</version>
+				<configuration>
+					<httpConnector>
+						<port>8081</port>
+					</httpConnector>
+					<stopKey>CTRL+C</stopKey>
+					<stopPort>8999</stopPort>
+					<systemProperties>
+						<systemProperty>
+							<name>xwork.loggerFactory</name>
+							<value>com.opensymphony.xwork2.util.logging.log4j2.Log4j2LoggerFactory</value>
+						</systemProperty>
+					</systemProperties>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/</contextPath>
+					</webApp>
+
+					<contextHandlers>
+						<contextHandler
+							implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+							<war>web/target/web-0.0.1-SNAPSHOT.war</war>
+						</contextHandler>
+
+						<contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext"> 
+							<war>api/target/api-0.0.1-SNAPSHOT.war</war>
+							<contextPath>/api</contextPath>
+						</contextHandler>
+
+						<contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext"> 
+							<war>inventory/target/inventory-0.0.1-SNAPSHOT.war</war>
+							<contextPath>/inventory</contextPath>
+						</contextHandler>
+					</contextHandlers>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
