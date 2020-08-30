@@ -72,7 +72,14 @@ public class ApiServlet extends HttpServlet {
 			log.info("Sending request to backend URL: " + backendURL);
 
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet req = new HttpGet(backendURL);
+
+			URIBuilder builder = new URIBuilder(backendURL);
+			String carId = request.getParameter("carId");
+			if (carId != null) {
+				builder.setParameter("carId", "" + carId);
+			}
+			
+			HttpGet req = new HttpGet(builder.build());
 				
 			HttpResponse res = client.execute(req);
 			

@@ -1,4 +1,4 @@
 <%@ page language="java" %>
-<!--  br><IMG SRC="images/pipe.gif" -->
+</div>
 </body>
 </html>

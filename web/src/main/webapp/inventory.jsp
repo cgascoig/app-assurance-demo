@@ -15,20 +15,16 @@
 //		}
 %>
 
-<ul>
+<div id="inventorylist">
   <s:iterator value="cars">
-    <li><s:property value="model" /></li>
+    <div class="inventoryitem">
+      <h1><img src="images/manufacturers/<s:property value="mfg_smallLogo"/>" /> <a href="<s:url action="inventoryitem"><s:param name="carId" value="%{carId}" /></s:url>"><s:property value="model" /></a></h1>
+      <h2><s:property value="year" /> <s:property value="mfg_name" /> $<s:property value="price" /></h2>
+      <p>
+        <img src="images/cars/<s:property value="photo"/>.jpg" />
+      </p>
+    </div>
   </s:iterator>
-</ul>
-<table>
-<s:iterator value="cars">
-  <tr> 
-    <td > 
-    <p><a href="cars.do?query=manu&mid=<s:property />" ><s:property /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-  	</td>
-  	<td><p><a href="cars.do?query=manu&mid=<s:property />"><img src="images/manufacturers/<s:property />"></a></p></td>
-  </tr>
-</s:iterator>
+</div>
 
-</table>
 <%@ include file="footer.jsp" %>

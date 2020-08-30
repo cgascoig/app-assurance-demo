@@ -37,15 +37,27 @@ public class InventoryServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String reqUri = request.getRequestURI();
-		
 		log.info("Inventory Service Recieved Request URI: " + reqUri);
 
-		Collection<Car> cars = Car.getCars();
+		String carId = request.getParameter("carId");
 
 		Gson gson = new Gson();
-		
-		response.setContentType("application/json");
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println(gson.toJson(cars));
+
+		if (carId == null) {
+			// Get all cars
+
+			Collection<Car> cars = Car.getCars();
+			
+			response.setContentType("application/json");
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.getWriter().println(gson.toJson(cars));
+		} else {
+			// Get one car
+			Car car = Car.getCar(carId);
+
+			response.setContentType("application/json");
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.getWriter().println(gson.toJson(car));
+		}
 	}
 }

@@ -25,20 +25,26 @@ import com.google.gson.Gson;
 
 import cc.cloudten.supercar.models.Car;
 
-public class ActionInventory extends ActionSupport {
+
+public class ActionInventoryItem extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 
 	private static Log log = LogFactory.getLog(ActionInventory.class);
 
-	private Car[] cars;
+    private Car car;
+    
+    public String carId;
 	
 	public String execute() throws Exception {
-		log.info("ActionInventory executing");
+		log.info("ActionInventoryItem executing with carId "+ carId);
 
 		String apiURL = PropertiesHelper.getWebServiceProps().getProperty("api.url");
 
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet req = new HttpGet(apiURL + "/inventory/");
+        HttpClient client = HttpClientBuilder.create().build();
+        
+        URIBuilder builder = new URIBuilder(apiURL + "/inventory/");
+        builder.setParameter("carId", "" + carId);
+		HttpGet req = new HttpGet(builder.build());
 			
 		HttpResponse res = client.execute(req);
 		
@@ -52,7 +58,7 @@ public class ActionInventory extends ActionSupport {
 				log.info(resp);
 
 				Gson gson = new Gson();
-				cars = gson.fromJson(resp, Car[].class);
+				car = gson.fromJson(resp, Car.class);
 
 			} catch (Throwable e) {
 				throw new Exception("Error parsing API response", e);
@@ -64,7 +70,7 @@ public class ActionInventory extends ActionSupport {
 		}
 	}
 	
-	public Car[] getCars() {
-		return cars;
+	public Car getCar() {
+		return car;
 	}
 }

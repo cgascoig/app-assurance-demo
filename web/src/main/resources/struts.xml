@@ -28,6 +28,10 @@
         	<result name="success">/inventory.jsp</result>
         </action>
 
+        <action name="inventoryitem" class="cc.cloudten.web.action.ActionInventoryItem" method="execute">
+            <result name="success">/inventoryitem.jsp</result>
+        </action>
+
     </package>
 
     <!-- Add addition packages and configuration here. -->
