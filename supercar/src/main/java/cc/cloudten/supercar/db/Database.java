@@ -19,6 +19,7 @@ public class Database {
             Properties props = PropertiesHelper.getDBConnectionProps();
 
             log.info("Using database with URL " + props.getProperty("db.url"));
+            Class.forName("com.mysql.jdbc.Driver");
             Connection dbCon = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));;
             return dbCon;
         } catch(Exception e) {
