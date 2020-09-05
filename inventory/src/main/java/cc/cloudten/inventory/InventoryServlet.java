@@ -27,6 +27,8 @@ public class InventoryServlet extends HttpServlet {
 	private static final long serialVersionUID = -7888011897341720634L;
 	private static Log log = LogFactory.getLog(InventoryServlet.class);
 	
+	public static int[] buffer = new int[10];
+	public static int i_bufferSize = 10;
 
 	/**
 	 * 
@@ -40,6 +42,25 @@ public class InventoryServlet extends HttpServlet {
 		log.info("Inventory Service Recieved Request URI: " + reqUri);
 
 		String carId = request.getParameter("carId");
+		String bufferSize = request.getParameter("bufferSize");
+
+		if (bufferSize != null) {
+			int newBufferSize = Integer.parseInt(bufferSize);
+			log.info("Resizing buffer to " + newBufferSize);
+
+			if (newBufferSize > 0) {
+				buffer = new int[newBufferSize];
+				log.info("Resized buffer to " + newBufferSize);
+
+				i_bufferSize = newBufferSize;
+			}
+		}
+
+		log.info("Filling buffer with data");
+		for (int i=0; i< i_bufferSize; i++) {
+			buffer[i] = i % 256;
+		}
+		log.info("Finished filling buffer with data");
 
 		Gson gson = new Gson();
 
