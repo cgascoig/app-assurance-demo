@@ -24,12 +24,16 @@ public class FuelPrices {
     private double midgrade;
     private double premium;
     private double regular;
+
+    private static Client client;
     
     public static FuelPrices getFuelPrices() {
-    	ClientConfig configuration = new ClientConfig();
-    	configuration = configuration.property(ClientProperties.CONNECT_TIMEOUT, 1500);
-    	configuration = configuration.property(ClientProperties.READ_TIMEOUT, 1500);
-    	Client client = ClientBuilder.newClient(configuration);    	
+        if (client == null) {
+            ClientConfig configuration = new ClientConfig();
+            configuration = configuration.property(ClientProperties.CONNECT_TIMEOUT, 1500);
+            configuration = configuration.property(ClientProperties.READ_TIMEOUT, 1500);
+            client = ClientBuilder.newClient(configuration);
+        }
         
         WebTarget target = client.target("https://www.fueleconomy.gov/ws/rest/fuelprices");
         
