@@ -27,7 +27,3 @@ jobs:
           cp inventory/target/inventory*.war staging/inventory.war
           cd staging
           sha256sum *.war > hashes.txt
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Package
-          path: staging
