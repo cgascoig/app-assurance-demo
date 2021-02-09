@@ -56,6 +56,27 @@ public class ApiServlet extends HttpServlet {
 
 			log.info("API Service Recieved Request with URI: " + reqUri);
 
+			String numThreads = request.getParameter("numThreads");
+
+			if (numThreads != null) {
+				int nThreads = Integer.parseInt(numThreads);
+				log.info("Starting " + nThreads + " threads to waste CPU");
+
+				for (int i=0; i<nThreads; i++) {
+					new Thread(""+i){
+						public void run() {
+							int a=0;
+
+							for (int j=0; j<1000000000; j++) {
+								a+=j;
+							}
+
+							log.info("Finished thread: " + getName());
+						}
+					}.start();
+				}
+			}
+
 			String backendURL = "";
 
 			if (reqUri.startsWith("/api/inventory/")) {
